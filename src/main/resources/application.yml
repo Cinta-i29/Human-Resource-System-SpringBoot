@@ -1,0 +1,4 @@
+spring:
+  application:
+    name: Human-Resource-System-SpringBoot
+
