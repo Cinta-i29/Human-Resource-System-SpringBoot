@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gdou.mapper.EmployeeRecordMapper">
+
+    <resultMap id="BaseResultMap" type="com.gdou.pojo.entity.EmployeeRecord">
+            <id property="recordNumber" column="record_number" jdbcType="VARCHAR"/>
+            <result property="name" column="name" jdbcType="VARCHAR"/>
+            <result property="gender" column="gender" jdbcType="VARCHAR"/>
+            <result property="birthDate" column="birth_date" jdbcType="DATE"/>
+            <result property="age" column="age" jdbcType="INTEGER"/>
+            <result property="ethnicity" column="ethnicity" jdbcType="VARCHAR"/>
+            <result property="religion" column="religion" jdbcType="VARCHAR"/>
+            <result property="politicalStatus" column="political_status" jdbcType="VARCHAR"/>
+            <result property="idCardNumber" column="id_card_number" jdbcType="VARCHAR"/>
+            <result property="socialSecurityNumber" column="social_security_number" jdbcType="VARCHAR"/>
+            <result property="education" column="education" jdbcType="VARCHAR"/>
+            <result property="educationMajor" column="education_major" jdbcType="VARCHAR"/>
+            <result property="nationality" column="nationality" jdbcType="VARCHAR"/>
+            <result property="birthplace" column="birthplace" jdbcType="VARCHAR"/>
+            <result property="phone" column="phone" jdbcType="VARCHAR"/>
+            <result property="mobile" column="mobile" jdbcType="VARCHAR"/>
+            <result property="email" column="email" jdbcType="VARCHAR"/>
+            <result property="qq" column="qq" jdbcType="VARCHAR"/>
+            <result property="address" column="address" jdbcType="VARCHAR"/>
+            <result property="postalCode" column="postal_code" jdbcType="VARCHAR"/>
+            <result property="bank" column="bank" jdbcType="VARCHAR"/>
+            <result property="account" column="account" jdbcType="VARCHAR"/>
+            <result property="specialty" column="specialty" jdbcType="VARCHAR"/>
+            <result property="hobbies" column="hobbies" jdbcType="VARCHAR"/>
+            <result property="resume" column="resume" jdbcType="VARCHAR"/>
+            <result property="familyInfo" column="family_info" jdbcType="VARCHAR"/>
+            <result property="remarks" column="remarks" jdbcType="VARCHAR"/>
+            <result property="registrarId" column="registrar_id" jdbcType="INTEGER"/>
+            <result property="registrationTime" column="registration_time" jdbcType="TIMESTAMP"/>
+            <result property="organizationId" column="organization_id" jdbcType="INTEGER"/>
+            <result property="positionId" column="position_id" jdbcType="INTEGER"/>
+            <result property="title" column="title" jdbcType="VARCHAR"/>
+            <result property="salaryStandardId" column="salary_standard_id" jdbcType="INTEGER"/>
+            <result property="rewardBonus" column="reward_bonus" jdbcType="INTEGER"/>
+            <result property="deductionBonus" column="deduction_bonus" jdbcType="INTEGER"/>
+            <result property="photoUrl" column="photo_url" jdbcType="VARCHAR"/>
+            <result property="status" column="status" jdbcType="VARCHAR"/>
+    </resultMap>
+
+</mapper>

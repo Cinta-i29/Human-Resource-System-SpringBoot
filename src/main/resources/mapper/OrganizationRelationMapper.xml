@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gdou.mapper.OrganizationRelationMapper">
+
+    <resultMap id="BaseResultMap" type="com.gdou.pojo.entity.OrganizationRelation">
+            <id property="firstLevelId" column="first_level_id" jdbcType="VARCHAR"/>
+            <id property="secondLevelId" column="second_level_id" jdbcType="VARCHAR"/>
+            <id property="thirdLevelId" column="third_level_id" jdbcType="VARCHAR"/>
+            <id property="month" column="month" jdbcType="VARCHAR"/>
+            <result property="salaryNumber" column="salary_number" jdbcType="INTEGER"/>
+            <result property="status" column="status" jdbcType="VARCHAR"/>
+            <result property="createdAt" column="created_at" jdbcType="TIMESTAMP"/>
+            <result property="updatedAt" column="updated_at" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+</mapper>

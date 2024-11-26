@@ -1,4 +1,11 @@
+server:
+  port: 12345
 spring:
   application:
     name: Human-Resource-System-SpringBoot
-
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://badtzh.xyz:33306/hrs?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    username: root
+    password: turingwlb666
+    type: com.alibaba.druid.pool.DruidDataSource
