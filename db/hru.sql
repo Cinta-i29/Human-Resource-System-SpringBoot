@@ -28,7 +28,7 @@ CREATE TABLE organization_relation
     status          VARCHAR(50) DEFAULT '待复核' CHECK (status IN ('待复核', '已发放')), -- 状态
     created_at      DATETIME    DEFAULT CURRENT_TIMESTAMP,                               -- 创建时间
     updated_at      DATETIME    DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,   -- 更新时间
-    PRIMARY KEY (first_level_id, second_level_id, third_level_id, month)  -- 唯一性约束
+    PRIMARY KEY (first_level_id, second_level_id, third_level_id, month)                 -- 唯一性约束
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4 COMMENT = '机构关联表';
 
@@ -75,9 +75,9 @@ CREATE TABLE salary_standard_item
 CREATE TABLE user
 (
     user_id    INT AUTO_INCREMENT PRIMARY KEY,                                -- 用户ID，主键
-    account    VARCHAR(50)  NOT NULL UNIQUE,                                  -- 用户登录名
-    password   VARCHAR(255) NOT NULL,                                         -- 用户密码
     username   VARCHAR(50)  NOT NULL,                                         -- 用户名
+    password   VARCHAR(255) NOT NULL,                                         -- 用户密码
+    name       VARCHAR(50)  NOT NULL,                                         -- 用户登录名
     role       VARCHAR(50)  NOT NULL CHECK (role IN
                                             ('Administrator', 'HR-Specialist', 'HR-Manager', 'Salary-Specialist',
                                              'Salary-Manager')),              -- 用户角色
