@@ -4,4 +4,16 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gdou.mapper.OrganizationMapper">
 
+
+    <select id="getOrgByCode" resultType="java.lang.Integer">
+        SELECT o3.id
+        FROM organization o1,
+             organization o2,
+             organization o3
+        WHERE o2.parent_id = o1.id
+          AND o3.parent_id = o2.id
+          AND o1.code = #{code1}
+          AND o2.code = #{code2}
+          AND o3.code = #{code3}
+    </select>
 </mapper>

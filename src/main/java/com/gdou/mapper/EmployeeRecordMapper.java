@@ -1,8 +1,10 @@
 package com.gdou.mapper;
 
-import com.gdou.pojo.entity.EmployeeRecord;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.gdou.pojo.entity.EmployeeRecord;
 import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
 
 /**
 * @author zzhave
@@ -13,6 +15,7 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface EmployeeRecordMapper extends BaseMapper<EmployeeRecord> {
 
+    List<String> getMaxRecordNum(String formattedCode);
 }
 
 

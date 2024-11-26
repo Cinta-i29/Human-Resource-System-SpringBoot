@@ -26,6 +26,7 @@ import java.util.stream.Collectors;
 public class OrganizationServiceImpl extends ServiceImpl<OrganizationMapper, Organization>
         implements OrganizationService {
     public void addOrganization(AddOrgVo addOrgVo) {
+        // 根据添加的机构级别进行不同的处理
         if (addOrgVo.getLevel() == 1) {
             // 1. 查询一级机构是否重复
             LambdaQueryWrapper<Organization> wrapper = new LambdaQueryWrapper<>();
@@ -193,8 +194,17 @@ public class OrganizationServiceImpl extends ServiceImpl<OrganizationMapper, Org
         }
         return org1List;
     }
+
+    /**
+     * 根据机构代码查询机构id
+     *
+     * @return
+     */
+    public Integer getOrgByCode(Integer code1, Integer code2, Integer code3) {
+        // code1为一级机构的code,code2为二级机构的code,code3为三级机构的code,
+        // 根据code1,code2,code3得到对应的机构id
+        return baseMapper.getOrgByCode(code1, code2, code3);
+    }
+
+
 }
-
-
-
-

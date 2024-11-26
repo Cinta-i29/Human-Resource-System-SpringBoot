@@ -16,4 +16,6 @@ public interface OrganizationService extends IService<Organization> {
     void addOrganization(AddOrgVo addOrgVo);
 
     List<Org1Vo> getOrgList();
+
+    Integer getOrgByCode(Integer code1, Integer code2, Integer code3);
 }
