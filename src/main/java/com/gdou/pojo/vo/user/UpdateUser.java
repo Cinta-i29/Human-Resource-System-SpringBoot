@@ -1,6 +1,5 @@
-package com.gdou.pojo.vo;
+package com.gdou.pojo.vo.user;
 
-import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
 import java.io.Serializable;

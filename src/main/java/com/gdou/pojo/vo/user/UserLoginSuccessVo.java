@@ -1,4 +1,4 @@
-package com.gdou.pojo.vo;
+package com.gdou.pojo.vo.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

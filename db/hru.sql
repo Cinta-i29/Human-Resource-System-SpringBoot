@@ -6,31 +6,28 @@ use hrs;
 
 CREATE TABLE organization
 (
-    id         VARCHAR(50)  NOT NULL,                                          -- 机构编号，主键
-    name       VARCHAR(255) NOT NULL,                                          -- 机构名称
-    level      INT          NOT NULL,                                          -- 机构层级，用于快速判断机构之间的层级关系
-    parent_id  INT,                                                            -- 父级机构ID
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,                             -- 创建时间
-    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, -- 更新时间
-    PRIMARY KEY (id, level),                                                   -- 唯一索引：机构编号与层级组合唯一
-    CHECK (level IN (1, 2, 3))                                                 -- 机构层级的检查（如：1为一级，2为二级，3为三级）
+    id         INT PRIMARY KEY AUTO_INCREMENT NOT NULL COMMENT '机构编号，主键',                           -- 机构编号，主键
+    name       VARCHAR(255)                   NOT NULL COMMENT '机构名称',                                -- 机构名称
+    parent_id  INT COMMENT '父级机构id',                                                                  -- 父级机构id
+    code       INT                            NOT NULL COMMENT '机构code',                                -- 机构code
+    level      INT                            NOT NULL COMMENT '机构层级，用于快速判断机构之间的层级关系', -- 机构层级，用于快速判断机构之间的层级关系
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',                                     -- 创建时间
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',         -- 更新时间
+    CHECK (level IN (1, 2, 3))                                                                            -- 机构层级的检查（如：1为一级，2为二级，3为三级）
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4 COMMENT = '机构表';
 
-
-CREATE TABLE organization_relation
+CREATE TABLE bill
 (
-    salary_number   INT,                                                                 -- 薪酬编号
-    first_level_id  VARCHAR(50) NOT NULL,                                                -- 一级机构id
-    second_level_id VARCHAR(50) NOT NULL,                                                -- 二级机构id
-    third_level_id  VARCHAR(50) NOT NULL,                                                -- 三级机构id
-    month           VARCHAR(50),                                                         -- 薪酬月份
-    status          VARCHAR(50) DEFAULT '待复核' CHECK (status IN ('待复核', '已发放')), -- 状态
-    created_at      DATETIME    DEFAULT CURRENT_TIMESTAMP,                               -- 创建时间
-    updated_at      DATETIME    DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,   -- 更新时间
-    PRIMARY KEY (first_level_id, second_level_id, third_level_id, month)                 -- 唯一性约束
+    salary_number INT COMMENT '薪酬编号',                                                              -- 薪酬编号
+    org_id        INT COMMENT '机构id',                                                                -- 机构id
+    month         VARCHAR(50) COMMENT '薪酬月份',                                                      -- 薪酬月份
+    data          JSON COMMENT '薪酬数据',                                                             -- 薪酬数据
+    status        VARCHAR(50) DEFAULT '待复核' CHECK (status IN ('待复核', '已发放')) COMMENT '状态',  -- 状态
+    created_at    DATETIME    DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',                            -- 创建时间
+    updated_at    DATETIME    DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间' -- 更新时间
 ) ENGINE = InnoDB
-  DEFAULT CHARSET = utf8mb4 COMMENT = '机构关联表';
+  DEFAULT CHARSET = utf8mb4 COMMENT = '账单薪酬月份表';
 
 CREATE TABLE position
 (

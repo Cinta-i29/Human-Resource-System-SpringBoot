@@ -1,9 +1,9 @@
 package com.gdou.mapping;
 
 import com.gdou.pojo.entity.User;
-import com.gdou.pojo.vo.LoginUserVo;
-import com.gdou.pojo.vo.UpdateUser;
-import com.gdou.pojo.vo.UserLoginSuccessVo;
+import com.gdou.pojo.vo.user.LoginUserVo;
+import com.gdou.pojo.vo.user.UpdateUser;
+import com.gdou.pojo.vo.user.UserLoginSuccessVo;
 import org.mapstruct.Mapper;
 
 /**

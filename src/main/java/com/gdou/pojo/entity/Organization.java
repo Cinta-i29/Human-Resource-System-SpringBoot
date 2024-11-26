@@ -14,12 +14,12 @@ import java.util.Date;
 @Data
 public class Organization implements Serializable {
     /**
-     * 机构编号，主键
+     * 主键id
      */
-    private String id;
+    private Integer id;
 
     /**
-     * 机构层级，用于快速判断机构之间的层级关系
+     * 机构级别
      */
     private Integer level;
 
@@ -29,9 +29,14 @@ public class Organization implements Serializable {
     private String name;
 
     /**
-     * 父级机构ID
+     * 父级机构Id
      */
     private Integer parentId;
+
+    /**
+     * 机构code
+     */
+    private Integer code;
 
     /**
      * 创建时间
@@ -39,7 +44,7 @@ public class Organization implements Serializable {
     private Date createdAt;
 
     /**
-     * 更新时间
+     * 修改时间
      */
     private Date updatedAt;
 

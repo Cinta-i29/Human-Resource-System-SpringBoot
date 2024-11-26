@@ -1,6 +1,5 @@
 package com.gdou.pojo.entity;
 
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
@@ -17,7 +16,6 @@ public class EmployeeRecord implements Serializable {
     /**
      * 档案编号，唯一标识
      */
-    @TableId
     private String recordNumber;
 
     /**
