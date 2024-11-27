@@ -2,6 +2,7 @@ package com.gdou.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.gdou.pojo.entity.EmployeeRecord;
+import com.gdou.pojo.vo.employee.ConditionalQueriesEmployeeVo;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

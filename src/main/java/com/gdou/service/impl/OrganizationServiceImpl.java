@@ -43,7 +43,7 @@ public class OrganizationServiceImpl extends ServiceImpl<OrganizationMapper, Org
             wrapper1.orderByDesc(Organization::getCode);
             wrapper1.last("limit 1");
             Organization maxCodeOrg = baseMapper.selectOne(wrapper1);
-            int code = maxCodeOrg == null ? 0 : maxCodeOrg.getCode() + 1;
+            int code = maxCodeOrg == null ? 1 : maxCodeOrg.getCode() + 1;
 
             // 3. 插入一级机构
             Organization org = new Organization();
@@ -78,7 +78,7 @@ public class OrganizationServiceImpl extends ServiceImpl<OrganizationMapper, Org
             wrapper2.orderByDesc(Organization::getCode);
             wrapper2.last("limit 1");
             Organization maxCodeOrg = baseMapper.selectOne(wrapper2);
-            int code = maxCodeOrg == null ? 0 : maxCodeOrg.getCode() + 1;
+            int code = maxCodeOrg == null ? 1 : maxCodeOrg.getCode() + 1;
 
             // 4. 插入二级机构
             Organization org = new Organization();
@@ -124,7 +124,7 @@ public class OrganizationServiceImpl extends ServiceImpl<OrganizationMapper, Org
             wrapper3.orderByDesc(Organization::getCode);
             wrapper3.last("limit 1");
             Organization maxCodeOrg = baseMapper.selectOne(wrapper3);
-            int code = maxCodeOrg == null ? 0 : maxCodeOrg.getCode() + 1;
+            int code = maxCodeOrg == null ? 1 : maxCodeOrg.getCode() + 1;
 
             // 5. 插入三级机构
             Organization org = new Organization();

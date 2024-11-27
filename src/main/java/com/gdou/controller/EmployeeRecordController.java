@@ -7,16 +7,19 @@ import com.gdou.common.UserRole;
 import com.gdou.mapping.EmployeeRecordMapping;
 import com.gdou.pojo.vo.Result;
 import com.gdou.pojo.vo.employee.AddEmployeeRecordVo;
+import com.gdou.pojo.vo.employee.ConditionalQueriesEmployeeVo;
 import com.gdou.pojo.vo.employee.UpdateEmployeeRecordVo;
 import com.gdou.pojo.vo.employee.UpdateEmployeeRecordVoFromHrmVo;
 import com.gdou.service.EmployeeRecordService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * @author howe
@@ -150,7 +153,37 @@ public class EmployeeRecordController {
     }
 
     /**
-     * TODO: 1.条件查询员工   2.头像上传修改
+     * 根据员工档案编号上传头像
      */
+    @PostMapping("/upload/avatar/{recordNumber}")
+    @Operation(summary = "根据员工档案编号上传头像", description = "根据员工档案编号上传头像，返回上传的头像地址。头像地址命名是 档案编号+文件类型的形式")
+    @Parameters({
+            @Parameter(name = "Authorization", description = "Token", in = ParameterIn.HEADER, schema = @Schema(type = "string"), required = true),
+            @Parameter(name = "headPhoto", description = "头像", in = ParameterIn.QUERY, schema = @Schema(type = "file"), required = true)
+    })
+    @SaCheckRole(value = {UserRole.ADMIN_STR, UserRole.HR_SPECIALIST_STR, UserRole.HR_MANAGER_STR}, mode = SaMode.OR)
+    public Result uploadAvatar(@PathVariable String recordNumber, @RequestParam("headPhoto") MultipartFile file) {
+        return Result.builder()
+                .code(ResultCode.SUCCESS.code)
+                .msg("上传成功")
+                .data(employeeRecordService.uploadAvatar(recordNumber, file))
+                .build();
+    }
+
+    /**
+     * 条件查询员工
+     */
+    @PostMapping("/condition/search")
+    @Operation(summary = "条件查询员工", description = "条件查询员工，返回符合条件的员工档案列表")
+    @Parameter(name = "Authorization", description = "Token", in = ParameterIn.HEADER, schema = @Schema(type = "string"), required = true)
+    @SaCheckRole(value = {UserRole.ADMIN_STR, UserRole.HR_SPECIALIST_STR, UserRole.HR_MANAGER_STR}, mode = SaMode.OR)
+    public Result search(@RequestBody ConditionalQueriesEmployeeVo conditionalQueriesEmployeeVo) {
+        return Result.builder()
+                .code(ResultCode.SUCCESS.code)
+                .msg("查询成功")
+                .data(employeeRecordService.conditionSearch(conditionalQueriesEmployeeVo))
+                .build();
+    }
+
 }
 

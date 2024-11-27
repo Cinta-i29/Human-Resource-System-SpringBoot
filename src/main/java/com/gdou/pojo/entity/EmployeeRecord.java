@@ -17,6 +17,7 @@ import java.util.Date;
 public class EmployeeRecord implements Serializable {
     /**
      * 档案编号，唯一标识
+     * 2024-00-00-00-01
      */
     @TableId
     private String recordNumber;

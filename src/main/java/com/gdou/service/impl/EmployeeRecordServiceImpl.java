@@ -2,16 +2,20 @@ package com.gdou.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.gdou.common.FileContentType;
 import com.gdou.exception.CustomException;
 import com.gdou.mapper.EmployeeRecordMapper;
 import com.gdou.mapping.EmployeeRecordMapping;
 import com.gdou.pojo.entity.EmployeeRecord;
 import com.gdou.pojo.vo.employee.AddEmployeeRecordVo;
+import com.gdou.pojo.vo.employee.ConditionalQueriesEmployeeVo;
 import com.gdou.pojo.vo.employee.UpdateEmployeeRecordVoFromHrmVo;
 import com.gdou.service.EmployeeRecordService;
 import com.gdou.service.OrganizationService;
+import com.gdou.support.MinioHelper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -26,6 +30,7 @@ import java.util.List;
 public class EmployeeRecordServiceImpl extends ServiceImpl<EmployeeRecordMapper, EmployeeRecord> implements EmployeeRecordService {
     private final EmployeeRecordMapping employeeRecordMapping;
     private final OrganizationService organizationService;
+    private final MinioHelper minio;
 
     @Override
     public EmployeeRecord addEmployeeRecord(AddEmployeeRecordVo addEmployeeRecordVo) {
@@ -144,8 +149,74 @@ public class EmployeeRecordServiceImpl extends ServiceImpl<EmployeeRecordMapper,
     public List<EmployeeRecord> getListDeleted() {
         return lambdaQuery().eq(EmployeeRecord::getStatus, "已删除").list();
     }
+
+    public String uploadAvatar(String recordNumber, MultipartFile file) {
+        // 1. 查询员工档案是否存在
+        EmployeeRecord employeeRecord = baseMapper.selectById(recordNumber);
+        if (employeeRecord == null) {
+            throw new CustomException("员工档案不存在");
+        }
+
+        // 2. 上传头像
+        if (file != null) {
+            String contentType = file.getContentType();
+            if (contentType == null || !contentType.startsWith(FileContentType.IMAGE_TYPE)) {
+                throw new CustomException("文件类型不合法");
+            }
+            String filename = recordNumber + "." + contentType.split("/")[1];
+            employeeRecord.setPhotoUrl(minio.uploadFile(file, filename));
+        }
+
+        // 3. 更新头像地址
+        baseMapper.updateById(employeeRecord);
+
+        // 4. 返回头像地址
+        return employeeRecord.getPhotoUrl();
+    }
+
+    public List<EmployeeRecord> conditionSearch(ConditionalQueriesEmployeeVo conditionalQueriesEmployeeVo) {
+        // 1. 查询所有员工档案，不包括 status 为 '已删除' 的档案，包括该时间段内的档案
+        LambdaQueryWrapper<EmployeeRecord> wrapper = new LambdaQueryWrapper<>();
+        wrapper.ne(EmployeeRecord::getStatus, "已删除");
+        // 1.1 如果开始日期不为空
+        if (!conditionalQueriesEmployeeVo.getStartTime().isBlank()) {
+            wrapper.ge(EmployeeRecord::getRegistrationTime, conditionalQueriesEmployeeVo.getStartTime());
+        }
+        // 1.2 如果结束日期不为空
+        if (!conditionalQueriesEmployeeVo.getEndTime().isBlank()) {
+            wrapper.le(EmployeeRecord::getRegistrationTime, conditionalQueriesEmployeeVo.getEndTime());
+        }
+        // 1.3 如果职位id不为空
+        if (!conditionalQueriesEmployeeVo.getPositionId().isBlank()) {
+            wrapper.eq(EmployeeRecord::getPositionId, conditionalQueriesEmployeeVo.getPositionId());
+        }
+        List<EmployeeRecord> list = baseMapper.selectList(wrapper);
+
+        // 2. 根据机构code的条件查询
+        if (!conditionalQueriesEmployeeVo.getFirstCode().isBlank()) {
+            int value = Integer.parseInt(conditionalQueriesEmployeeVo.getFirstCode());
+            if (value < 1 || value > 99) {
+                throw new CustomException("一级机构代码错误");
+            }
+            list.removeIf(emp -> !emp.getRecordNumber().substring(4, 6).equals(String.format("%02d", value)));
+        }
+
+        if (!conditionalQueriesEmployeeVo.getSecondCode().isBlank()) {
+            int value = Integer.parseInt(conditionalQueriesEmployeeVo.getSecondCode());
+            if (value < 1 || value > 99) {
+                throw new CustomException("二级机构代码错误");
+            }
+            list.removeIf(emp -> !emp.getRecordNumber().substring(6, 8).equals(String.format("%02d", value)));
+        }
+
+        if (!conditionalQueriesEmployeeVo.getThirdCode().isBlank()) {
+            int value = Integer.parseInt(conditionalQueriesEmployeeVo.getThirdCode());
+            if (value < 1 || value > 99) {
+                throw new CustomException("三级机构代码错误");
+            }
+            list.removeIf(emp -> !emp.getRecordNumber().substring(8, 10).equals(String.format("%02d", value)));
+        }
+
+        return list;
+    }
 }
-
-
-
-

@@ -3,7 +3,9 @@ package com.gdou.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.gdou.pojo.entity.EmployeeRecord;
 import com.gdou.pojo.vo.employee.AddEmployeeRecordVo;
+import com.gdou.pojo.vo.employee.ConditionalQueriesEmployeeVo;
 import com.gdou.pojo.vo.employee.UpdateEmployeeRecordVoFromHrmVo;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -29,4 +31,8 @@ public interface EmployeeRecordService extends IService<EmployeeRecord> {
     void recoverEmployeeRecord(String recordNumber);
 
     List<EmployeeRecord> getListDeleted();
+
+    String uploadAvatar(String recordNumber, MultipartFile file);
+
+    List<EmployeeRecord> conditionSearch(ConditionalQueriesEmployeeVo conditionalQueriesEmployeeVo);
 }

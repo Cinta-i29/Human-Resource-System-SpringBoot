@@ -1,5 +1,8 @@
+## server config
 server:
   port: 12345
+
+## spring config
 spring:
   application:
     name: Human-Resource-System-SpringBoot
@@ -10,7 +13,15 @@ spring:
     password:
     type: com.alibaba.druid.pool.DruidDataSource
 
-############## knife4j 接口文档配置 ##############
+
+## Minio
+minio:
+  endpoint: https://badtzh.xyz:49000/
+  bucket: hrs
+  access_key:
+  secret_key:
+
+## knife4j 接口文档配置
 springdoc:
   swagger-ui:
     #指定Swagger UI的自定义前端请求路径
