@@ -9,8 +9,8 @@ public class UserRole {
 
     public static final String ADMIN_STR = "Administrator";
     public static final String HR_SPECIALIST_STR = "HR-Specialist";
-    public static final String HR_MANAGER = "HR-Manager";
-    public static final String SALARY_SPECIALIST = "Salary-Specialist";
-    public static final String SALARY_MANAGER = "Salary-Manager";
+    public static final String HR_MANAGER_STR = "HR-Manager";
+    public static final String SALARY_SPECIALIST_STR = "Salary-Specialist";
+    public static final String SALARY_MANAGER_STR = "Salary-Manager";
 
 }

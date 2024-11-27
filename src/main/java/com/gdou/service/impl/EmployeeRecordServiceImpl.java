@@ -1,11 +1,13 @@
 package com.gdou.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.gdou.exception.CustomException;
 import com.gdou.mapper.EmployeeRecordMapper;
 import com.gdou.mapping.EmployeeRecordMapping;
 import com.gdou.pojo.entity.EmployeeRecord;
 import com.gdou.pojo.vo.employee.AddEmployeeRecordVo;
+import com.gdou.pojo.vo.employee.UpdateEmployeeRecordVoFromHrmVo;
 import com.gdou.service.EmployeeRecordService;
 import com.gdou.service.OrganizationService;
 import lombok.RequiredArgsConstructor;
@@ -72,6 +74,75 @@ public class EmployeeRecordServiceImpl extends ServiceImpl<EmployeeRecordMapper,
         baseMapper.insert(employeeRecord);
 
         return employeeRecord;
+    }
+
+    public void deleteEmployeeRecord(String recordNumber) {
+        // 1. 查询员工档案是否存在
+        EmployeeRecord employeeRecord = baseMapper.selectByRecordNumber(recordNumber);
+        if (employeeRecord == null) {
+            throw new CustomException("员工档案不存在");
+        }
+
+        // 2. 删除员工档案
+        employeeRecord.setStatus("已删除");
+        baseMapper.updateById(employeeRecord);
+    }
+
+    public List<EmployeeRecord> getList() {
+        // 查询所有员工档案，不包括 status 为 '已删除' 的档案
+        return lambdaQuery().ne(EmployeeRecord::getStatus, "已删除").list();
+    }
+
+    public void updateEmployeeRecordFromHrs(EmployeeRecord employeeRecord) {
+        // 1. 查询档案是否存在
+        EmployeeRecord dbEmp = baseMapper.selectById(employeeRecord.getRecordNumber());
+
+        // 1.1 档案的状态是否为'待复核'或'已删除'时，不可以修改
+        if (dbEmp == null) throw new CustomException("档案不存在");
+        if (dbEmp.getStatus().equals("待复核") || dbEmp.getStatus().equals("已删除")) {
+            throw new CustomException("档案状态为:" + dbEmp.getStatus() + "，不可修改");
+        }
+        // 1.2 档案的状态是否为'正常'时，可以修改，并把档案状态设置为'待复核'
+        employeeRecord.setStatus("待复核");
+        baseMapper.updateById(employeeRecord);
+    }
+
+    public void updateEmployeeRecordFromHrm(UpdateEmployeeRecordVoFromHrmVo updateEmployeeRecordVoFromHrmVo) {
+        EmployeeRecord employeeRecord = employeeRecordMapping.updateEmployeeRecordVoFromHrmVoToEmployeeRecord(updateEmployeeRecordVoFromHrmVo);
+        // 1. 查询档案是否存在
+        EmployeeRecord dbEmp = baseMapper.selectById(employeeRecord.getRecordNumber());
+
+        if (dbEmp == null) throw new CustomException("档案不存在");
+        if (dbEmp.getStatus().equals("已删除")) {
+            throw new CustomException("档案状态为:" + dbEmp.getStatus() + "，不可修改");
+        }
+
+        // 设置复核意见
+        employeeRecord.setReviewOpinions(updateEmployeeRecordVoFromHrmVo.getReviewOpinions());
+        employeeRecord.setStatus("正常");
+        baseMapper.updateById(employeeRecord);
+    }
+
+    public EmployeeRecord getEmployeeRecord(String recordNumber) {
+        LambdaQueryWrapper<EmployeeRecord> wrapper = new LambdaQueryWrapper<>();
+        wrapper.ne(EmployeeRecord::getStatus, "已删除");
+        wrapper.eq(EmployeeRecord::getRecordNumber, recordNumber);
+        return baseMapper.selectOne(wrapper);
+    }
+
+    public void recoverEmployeeRecord(String recordNumber) {
+        EmployeeRecord employeeRecord = baseMapper.selectById(recordNumber);
+        if (employeeRecord == null) {
+            throw new CustomException("档案不存在");
+        }
+
+        employeeRecord.setStatus("正常");
+
+        baseMapper.updateById(employeeRecord);
+    }
+
+    public List<EmployeeRecord> getListDeleted() {
+        return lambdaQuery().eq(EmployeeRecord::getStatus, "已删除").list();
     }
 }
 

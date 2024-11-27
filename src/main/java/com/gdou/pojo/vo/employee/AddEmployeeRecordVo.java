@@ -14,13 +14,10 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AddEmployeeRecordVo {
-    @Parameter(description = "档案编号，唯一标识，自动生成的")
-    private String recordNumber;
-
     @Parameter(description = "员工姓名")
     private String name;
 
-    @Parameter(description = "员工性别")
+    @Parameter(description = "员工性别(男，女)")
     private String gender;
 
     @Parameter(description = "员工出生日期")
@@ -108,7 +105,7 @@ public class AddEmployeeRecordVo {
     @Parameter(description = "职位ID，外键，关联职位表")
     private Integer positionId;
 
-    @Parameter(description = "职称")
+    @Parameter(description = "职称(初级，中级，高级)")
     private String title;
 
     @Parameter(description = "薪酬标准ID，外键，关联薪酬标准表")

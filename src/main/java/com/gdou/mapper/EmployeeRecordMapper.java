@@ -16,6 +16,9 @@ import java.util.List;
 public interface EmployeeRecordMapper extends BaseMapper<EmployeeRecord> {
 
     List<String> getMaxRecordNum(String formattedCode);
+
+    EmployeeRecord selectByRecordNumber(String recordNumber);
+
 }
 
 

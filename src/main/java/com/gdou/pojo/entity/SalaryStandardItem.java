@@ -1,12 +1,10 @@
 package com.gdou.pojo.entity;
 
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Date;
 
 /**
  * 薪酬标准与薪酬项目关系表
@@ -29,9 +27,4 @@ public class SalaryStandardItem implements Serializable {
      * 该项目对应的金额
      */
     private BigDecimal amount;
-
-    /**
-     * 创建时间
-     */
-    private Date createdAt;
 }

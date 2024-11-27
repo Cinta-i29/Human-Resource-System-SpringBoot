@@ -50,9 +50,5 @@ public class SalaryStandard implements Serializable {
      */
     private String comment;
 
-    /**
-     * 更新时间
-     */
-    private Date updatedAt;
 
 }

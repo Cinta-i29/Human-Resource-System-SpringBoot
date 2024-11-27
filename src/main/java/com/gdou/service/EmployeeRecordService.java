@@ -3,6 +3,9 @@ package com.gdou.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.gdou.pojo.entity.EmployeeRecord;
 import com.gdou.pojo.vo.employee.AddEmployeeRecordVo;
+import com.gdou.pojo.vo.employee.UpdateEmployeeRecordVoFromHrmVo;
+
+import java.util.List;
 
 /**
  * @author zzhave
@@ -12,4 +15,18 @@ import com.gdou.pojo.vo.employee.AddEmployeeRecordVo;
 public interface EmployeeRecordService extends IService<EmployeeRecord> {
 
     EmployeeRecord addEmployeeRecord(AddEmployeeRecordVo addEmployeeRecordVo);
+
+    void deleteEmployeeRecord(String recordNumber);
+
+    List<EmployeeRecord> getList();
+
+    void updateEmployeeRecordFromHrs(EmployeeRecord employeeRecord);
+
+    void updateEmployeeRecordFromHrm(UpdateEmployeeRecordVoFromHrmVo updateEmployeeRecordVoFromHrmVo);
+
+    EmployeeRecord getEmployeeRecord(String recordNumber);
+
+    void recoverEmployeeRecord(String recordNumber);
+
+    List<EmployeeRecord> getListDeleted();
 }

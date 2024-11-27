@@ -169,6 +169,7 @@ public class OrganizationServiceImpl extends ServiceImpl<OrganizationMapper, Org
                             org2Vo.setLevel(org2.getLevel());
                             org2Vo.setName(org2.getName());
                             org2Vo.setCode(org2.getCode());
+                            org2Vo.setParentCode(org1.getCode());
                             org2VoList.add(org2Vo);
 
                             // 三级机构
@@ -181,6 +182,7 @@ public class OrganizationServiceImpl extends ServiceImpl<OrganizationMapper, Org
                                         org3Vo.setLevel(org3.getLevel());
                                         org3Vo.setName(org3.getName());
                                         org3Vo.setCode(org3.getCode());
+                                        org3Vo.setParentCode(org2.getCode());
                                         org3VoList.add(org3Vo);
                                     }
                                 }

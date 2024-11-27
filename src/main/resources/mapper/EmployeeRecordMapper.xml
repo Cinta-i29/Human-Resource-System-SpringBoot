@@ -8,5 +8,10 @@
         FROM employee_record e
         WHERE e.record_number LIKE CONCAT(#{formattedCode}, '%')
     </select>
+    <select id="selectByRecordNumber" resultType="com.gdou.pojo.entity.EmployeeRecord">
+        SELECT e.*
+        FROM employee_record e
+        WHERE e.record_number = #{recordNumber}
+    </select>
 
 </mapper>

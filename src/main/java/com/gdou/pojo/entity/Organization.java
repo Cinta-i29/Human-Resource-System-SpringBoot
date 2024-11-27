@@ -38,14 +38,5 @@ public class Organization implements Serializable {
      */
     private Integer code;
 
-    /**
-     * 创建时间
-     */
-    private Date createdAt;
-
-    /**
-     * 修改时间
-     */
-    private Date updatedAt;
 
 }

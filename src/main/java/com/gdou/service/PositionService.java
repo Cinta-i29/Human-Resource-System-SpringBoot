@@ -2,6 +2,8 @@ package com.gdou.service;
 
 import com.gdou.pojo.entity.Position;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.gdou.pojo.vo.position.AddPositionVo;
+import com.gdou.pojo.vo.position.UpdatePositionVo;
 
 /**
 * @author zzhave
@@ -10,4 +12,9 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface PositionService extends IService<Position> {
 
+    Position addPosition(AddPositionVo addPositionVo);
+
+    void deletePosition(Long positionId);
+
+    Position updatePosition(UpdatePositionVo updatePositionVo);
 }
