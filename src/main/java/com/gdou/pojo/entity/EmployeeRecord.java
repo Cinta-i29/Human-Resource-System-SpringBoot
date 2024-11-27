@@ -163,6 +163,11 @@ public class EmployeeRecord implements Serializable {
     private Date registrationTime;
 
     /**
+     * 修改时间
+     */
+    private Date updateTime;
+
+    /**
      * 所属机构ID，外键，关联机构表
      */
     private Integer organizationId;

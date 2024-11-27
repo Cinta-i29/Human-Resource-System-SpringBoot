@@ -4,9 +4,9 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gdou.mapper.SalaryItemMapper">
 
-    <resultMap id="BaseResultMap" type="com.gdou.pojo.entity.SalaryItem">
-            <id property="id" column="id" jdbcType="INTEGER"/>
-            <result property="name" column="name" jdbcType="VARCHAR"/>
-            <result property="createdAt" column="created_at" jdbcType="TIMESTAMP"/>
-    </resultMap>
+    <select id="selectCountBySalaryItemId" resultType="java.lang.Integer">
+        select count(*)
+        from salary_standard_item
+        where salary_item_id = #{salaryItemId}
+    </select>
 </mapper>

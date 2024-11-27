@@ -1,7 +1,11 @@
 package com.gdou.service;
 
-import com.gdou.pojo.entity.SalaryStandard;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.gdou.pojo.entity.SalaryStandard;
+import com.gdou.pojo.vo.salary.AddSalaryStandardVo;
+import com.gdou.pojo.vo.salary.SalaryStandardListVo;
+
+import java.util.List;
 
 /**
 * @author zzhave
@@ -10,4 +14,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface SalaryStandardService extends IService<SalaryStandard> {
 
+    void addSalaryStandard(AddSalaryStandardVo addSalaryStandardVo);
+
+    List<SalaryStandardListVo> getlist();
 }

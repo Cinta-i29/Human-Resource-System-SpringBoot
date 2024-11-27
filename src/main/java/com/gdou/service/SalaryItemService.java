@@ -2,6 +2,7 @@ package com.gdou.service;
 
 import com.gdou.pojo.entity.SalaryItem;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.gdou.pojo.vo.salary.AddSalaryItemVo;
 
 /**
 * @author zzhave
@@ -10,4 +11,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface SalaryItemService extends IService<SalaryItem> {
 
+    void addSalaryItem(AddSalaryItemVo addSalaryItemVo);
+
+    void delete(Integer id);
 }

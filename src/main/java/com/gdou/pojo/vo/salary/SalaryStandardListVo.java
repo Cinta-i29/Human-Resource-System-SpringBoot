@@ -1,18 +1,19 @@
-package com.gdou.pojo.entity;
+package com.gdou.pojo.vo.salary;
 
-import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
- * 薪酬标准表
- * @TableName salary_standard
+ * @author howe
  */
-@TableName(value ="salary_standard")
 @Data
-public class SalaryStandard implements Serializable {
+@AllArgsConstructor
+@NoArgsConstructor
+public class SalaryStandardListVo {
     /**
      * 薪酬标准的唯一标识
      */
@@ -53,5 +54,8 @@ public class SalaryStandard implements Serializable {
      */
     private String comment;
 
-
+    /**
+     * 薪酬项目集合
+     */
+    private List<SalaryItemMoneyVo> SalaryItemMoneyVoList;
 }

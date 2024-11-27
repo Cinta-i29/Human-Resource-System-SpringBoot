@@ -42,30 +42,30 @@ CREATE TABLE salary_standard
 (
     id           INT AUTO_INCREMENT PRIMARY KEY,                                              -- 薪酬标准的唯一标识
     name         VARCHAR(255) NOT NULL,                                                       -- 薪酬标准名称
-    creator_id   INT          NOT NULL,                                                       -- 制定人id
-    registrar_id INT          NOT NULL,                                                       -- 登记人id
+    creator_id   INT,                                                                         -- 制定人id
+    registrar_id INT,                                                                         -- 登记人id
     status       VARCHAR(50) DEFAULT '待登记' CHECK (status IN ('待登记', '待复核', '正常')), -- 状态
     created_at   DATETIME    DEFAULT CURRENT_TIMESTAMP,                                       -- 登记时间
-    comment      TEXT,                                                                        -- 复核意见
-    updated_at   DATETIME    DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP            -- 更新时间
+    checked_at   DATETIME    DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,                        -- 复核时间
+    comment      TEXT        DEFAULT NULL                                                     -- 复核意见
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4 COMMENT = '薪酬标准表';
 
 CREATE TABLE salary_item
 (
-    id         INT AUTO_INCREMENT PRIMARY KEY,    -- 薪酬项目的唯一标识
-    name       VARCHAR(255) NOT NULL,             -- 薪酬项目名称
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP -- 创建时间
+    id           INT AUTO_INCREMENT PRIMARY KEY,    -- 薪酬项目的唯一标识
+    name         VARCHAR(255) NOT NULL,             -- 薪酬项目名称
+    is_deduction BOOLEAN  DEFAULT FALSE,            -- 是否为扣款项
+    created_at   DATETIME DEFAULT CURRENT_TIMESTAMP -- 创建时间
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4 COMMENT = '薪酬项目表';
 
 CREATE TABLE salary_standard_item
 (
-    salary_standard_id INT            NOT NULL,            -- 所属薪酬标准
-    salary_item_id     INT            NOT NULL,            -- 对应的薪酬项目
-    amount             DECIMAL(10, 2) NOT NULL,            -- 该项目对应的金额
-    created_at         DATETIME DEFAULT CURRENT_TIMESTAMP, -- 创建时间
-    PRIMARY KEY (salary_standard_id, salary_item_id)       -- 唯一组合索引
+    salary_standard_id INT NOT NULL,                            -- 所属薪酬标准
+    salary_item_id     INT NOT NULL,                            -- 对应的薪酬项目
+    amount             DECIMAL(10, 2) DEFAULT 0,                -- 该项目对应的金额
+    created_at         DATETIME       DEFAULT CURRENT_TIMESTAMP -- 创建时间
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4 COMMENT = '薪酬标准与薪酬项目关系表';
 
@@ -114,6 +114,7 @@ CREATE TABLE employee_record
     remarks                TEXT,                                                                        -- 备注信息
     registrar_id           INT,                                                                         -- 登记人，外键，关联用户表
     registration_time      DATETIME    DEFAULT CURRENT_TIMESTAMP,                                       -- 登记时间
+    update_time            DATETIME    DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,           -- 登记时间
     organization_id        INT,                                                                         -- 所属机构ID，外键，关联机构表
     position_id            INT,                                                                         -- 职位ID，外键，关联职位表
     title                  VARCHAR(50) DEFAULT '初级' CHECK (title IN ('高级', '中级', '初级')),        -- 职称

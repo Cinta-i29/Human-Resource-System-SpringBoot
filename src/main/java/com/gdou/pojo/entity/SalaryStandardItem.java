@@ -26,5 +26,5 @@ public class SalaryStandardItem implements Serializable {
     /**
      * 该项目对应的金额
      */
-    private BigDecimal amount;
+    private BigDecimal money;
 }

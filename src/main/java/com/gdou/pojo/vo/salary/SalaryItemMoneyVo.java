@@ -1,18 +1,16 @@
-package com.gdou.pojo.entity;
+package com.gdou.pojo.vo.salary;
 
-import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.AllArgsConstructor;
 import lombok.Data;
-
-import java.io.Serializable;
+import lombok.NoArgsConstructor;
 
 /**
- * 薪酬项目表
- *
- * @TableName salary_item
+ * @author howe
  */
-@TableName(value = "salary_item")
 @Data
-public class SalaryItem implements Serializable {
+@AllArgsConstructor
+@NoArgsConstructor
+public class SalaryItemMoneyVo {
     /**
      * 薪酬项目的唯一标识
      */
@@ -28,4 +26,8 @@ public class SalaryItem implements Serializable {
      */
     private Boolean isDeduction;
 
+    /**
+     * 项目金额
+     */
+    private Double money;
 }

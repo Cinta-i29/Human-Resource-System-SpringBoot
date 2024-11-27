@@ -4,15 +4,12 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gdou.mapper.SalaryStandardMapper">
 
-    <resultMap id="BaseResultMap" type="com.gdou.pojo.entity.SalaryStandard">
-            <id property="id" column="id" jdbcType="INTEGER"/>
-            <result property="name" column="name" jdbcType="VARCHAR"/>
-            <result property="creatorId" column="creator_id" jdbcType="INTEGER"/>
-            <result property="registrarId" column="registrar_id" jdbcType="INTEGER"/>
-            <result property="status" column="status" jdbcType="VARCHAR"/>
-            <result property="createdAt" column="created_at" jdbcType="TIMESTAMP"/>
-            <result property="comment" column="comment" jdbcType="VARCHAR"/>
-            <result property="updatedAt" column="updated_at" jdbcType="TIMESTAMP"/>
-    </resultMap>
 
+    <select id="getSalaryItemMoneyList" resultType="com.gdou.pojo.vo.salary.SalaryItemMoneyVo">
+        SELECT si.id, si.name, si.is_deduction, ssi.money
+        FROM salary_standard_item AS ssi
+                 JOIN salary_item AS si
+                      ON ssi.salary_item_id = si.id
+        WHERE ssi.salary_standard_id = #{id};
+    </select>
 </mapper>

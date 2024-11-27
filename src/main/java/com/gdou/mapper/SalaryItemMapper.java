@@ -13,6 +13,7 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface SalaryItemMapper extends BaseMapper<SalaryItem> {
 
+    Integer selectCountBySalaryItemId(Integer id);
 }
 
 

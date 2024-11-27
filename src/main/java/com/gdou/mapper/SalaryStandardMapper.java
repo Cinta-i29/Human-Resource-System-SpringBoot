@@ -1,8 +1,11 @@
 package com.gdou.mapper;
 
-import com.gdou.pojo.entity.SalaryStandard;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.gdou.pojo.entity.SalaryStandard;
+import com.gdou.pojo.vo.salary.SalaryItemMoneyVo;
 import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
 
 /**
 * @author zzhave
@@ -13,6 +16,7 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface SalaryStandardMapper extends BaseMapper<SalaryStandard> {
 
+    List<SalaryItemMoneyVo> getSalaryItemMoneyList(Integer id);
 }
 
 
