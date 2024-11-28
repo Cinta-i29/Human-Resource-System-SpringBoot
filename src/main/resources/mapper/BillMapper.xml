@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gdou.mapper.BillMapper">
+
+    <select id="getEmpList" resultType="com.gdou.pojo.vo.BillEmpListVo">
+        SELECT er.record_number      AS record_number,
+               er.name               AS name,
+               p.name                AS position_name,
+               er.title              AS title,
+               er.salary_standard_id AS salary_standard_id,
+               ss.name               AS salary_standard_name,
+               temp.sum              AS salary_standard_amount
+        FROM employee_record er
+                 JOIN position p
+                      ON er.position_id = p.id
+                 JOIN salary_standard ss
+                      ON er.salary_standard_id = ss.id
+                 JOIN (SELECT ssi.salary_standard_id, sum(ssi.money) sum
+                       FROM salary_standard_item ssi
+                       GROUP BY ssi.salary_standard_id) AS temp
+                      ON er.salary_standard_id = temp.salary_standard_id
+        WHERE er.status = '正常'
+          AND ss.status = '正常'
+          AND er.position_id IS NOT NULL;
+    </select>
+</mapper>

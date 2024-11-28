@@ -110,5 +110,4 @@ public class SalaryStandardController {
                 .build();
     }
 
-    //TODO: 姓名 档案编号 职位名称 职称 薪酬标准名称(id)
 }
