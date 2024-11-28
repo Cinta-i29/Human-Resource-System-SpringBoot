@@ -12,4 +12,13 @@
                       ON ssi.salary_item_id = si.id
         WHERE ssi.salary_standard_id = #{id};
     </select>
+    <select id="getOneByEmpId" resultType="com.gdou.pojo.vo.salary.SalaryStandardListVo">
+        SELECT si.id, si.name, si.is_deduction, ssi.money
+        FROM employee_record er
+                 JOIN salary_standard_item AS ssi
+                      ON er.salary_standard_id = ssi.salary_standard_id
+                 JOIN salary_item AS si
+                      ON ssi.salary_item_id = si.id
+        WHERE er.record_number = #{empId};
+    </select>
 </mapper>

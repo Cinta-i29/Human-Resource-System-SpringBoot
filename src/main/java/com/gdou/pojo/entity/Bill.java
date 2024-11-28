@@ -62,6 +62,11 @@ public class Bill implements Serializable {
     private Date reviewTime;
 
     /**
+     * 复核意见
+     */
+    private String reviewOpinion;
+
+    /**
      * 状态
      */
     private String status;

@@ -187,6 +187,10 @@ public class SalaryStandardServiceImpl extends ServiceImpl<SalaryStandardMapper,
         return voList;
     }
 
+    public List<SalaryStandardListVo> getOneByEmpId(String empId) {
+        return baseMapper.getOneByEmpId(empId);
+    }
+
 }
 
 

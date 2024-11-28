@@ -22,4 +22,6 @@ public interface SalaryStandardService extends IService<SalaryStandard> {
     List<SalaryStandardListVo> getList(String typeStr);
 
     List<SalaryStandardListVo> conditionSearch(ConditionSearchVo conditionSearchVo);
+
+    List<SalaryStandardListVo> getOneByEmpId(String empId);
 }

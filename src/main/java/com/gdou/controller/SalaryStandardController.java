@@ -110,4 +110,20 @@ public class SalaryStandardController {
                 .build();
     }
 
+    /**
+     * 根据档案编号获取薪酬标准
+     */
+    @GetMapping("/get/{empId}")
+    @Operation(summary = "根据档案编号获取薪酬标准及其项目", description = "根据档案编号获取薪酬标准,这个接口在进行薪酬账单登记时使用")
+    @Parameters({
+            @Parameter(name = "Authorization", description = "Token", in = ParameterIn.HEADER, schema = @Schema(type = "string"), required = true),
+            @Parameter(name = "empId", description = "档案编号", in = ParameterIn.PATH, schema = @Schema(type = "integer"), required = true)
+    })
+    public Result get(@PathVariable String empId) {
+        return Result.builder()
+                .code(ResultCode.SUCCESS.code)
+                .msg("获取成功")
+                .data(salaryStandardService.getOneByEmpId(empId))
+                .build();
+    }
 }

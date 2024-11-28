@@ -127,6 +127,7 @@ CREATE TABLE bill
     register_time      DATETIME    DEFAULT CURRENT_TIMESTAMP COMMENT '登记时间',
     review_id          INT COMMENT '复核人ID',
     review_time        DATETIME COMMENT '复核时间',
+    review_opinions    TEXT COMMENT '复核意见',
     status             VARCHAR(50) DEFAULT '待复核' CHECK (status IN ('待复核', '已发放')) COMMENT '状态'
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4 COMMENT = '员工薪酬账单表';
