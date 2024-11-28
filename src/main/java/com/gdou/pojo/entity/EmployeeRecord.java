@@ -155,17 +155,22 @@ public class EmployeeRecord implements Serializable {
     /**
      * 登记人，外键，关联用户表
      */
-    private Integer registrarId;
+    private Integer registerId;
 
     /**
      * 登记时间
      */
-    private Date registrationTime;
+    private Date registerTime;
 
     /**
-     * 修改时间
+     * 复核人
      */
-    private Date updateTime;
+    private Integer reviewId;
+
+    /**
+     * 复核时间
+     */
+    private Date reviewTime;
 
     /**
      * 所属机构ID，外键，关联机构表
@@ -186,16 +191,6 @@ public class EmployeeRecord implements Serializable {
      * 薪酬标准ID，外键，关联薪酬标准表
      */
     private Integer salaryStandardId;
-
-    /**
-     * 奖励奖金
-     */
-    private Integer rewardBonus;
-
-    /**
-     * 应扣奖金
-     */
-    private Integer deductionBonus;
 
     /**
      * 照片URL路径

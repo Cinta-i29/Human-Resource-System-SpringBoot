@@ -122,7 +122,7 @@ public class UserController {
     @Parameter(name = "Authorization", description = "Token", in = ParameterIn.HEADER, schema = @Schema(type = "string"), required = true)
     @SaCheckRole(UserRole.ADMIN_STR) // 只有超级管理员权限才能查看
     public Result add(@RequestBody User user) {
-        userService.save(user);
+        userService.saveUser(user);
         return Result.builder()
                 .code(ResultCode.SUCCESS.code)
                 .msg("新增成功")

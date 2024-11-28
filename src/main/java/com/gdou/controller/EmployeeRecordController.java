@@ -51,7 +51,7 @@ public class EmployeeRecordController {
      * 人事专员修改员工档案
      */
     @PostMapping("/update/s")
-    @Operation(summary = "人事专员修改员工档案", description = "人事专员修改员工档案")
+    @Operation(summary = "人事专员登记员工档案", description = "")
     @Parameter(name = "Authorization", description = "Token", in = ParameterIn.HEADER, schema = @Schema(type = "string"), required = true)
     @SaCheckRole(UserRole.HR_SPECIALIST_STR)
     public Result updateFromHrs(@RequestBody UpdateEmployeeRecordVo updateEmployeeRecordVo) {

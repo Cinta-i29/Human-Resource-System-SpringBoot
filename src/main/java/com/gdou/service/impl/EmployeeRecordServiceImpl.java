@@ -1,5 +1,6 @@
 package com.gdou.service.impl;
 
+import cn.dev33.satoken.stp.StpUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.gdou.common.FileContentType;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -75,7 +77,11 @@ public class EmployeeRecordServiceImpl extends ServiceImpl<EmployeeRecordMapper,
         sb.append(String.format("%02d", max + 1));
         employeeRecord.setRecordNumber(sb.toString());
 
-        // 3. 插入员工档案
+        // 3. 设置登记人和登记时间
+        employeeRecord.setRegisterId(StpUtil.getLoginIdAsInt());
+        employeeRecord.setRegisterTime(Calendar.getInstance().getTime());
+
+        // 4. 插入员工档案
         baseMapper.insert(employeeRecord);
 
         return employeeRecord;
@@ -122,8 +128,10 @@ public class EmployeeRecordServiceImpl extends ServiceImpl<EmployeeRecordMapper,
             throw new CustomException("档案状态为:" + dbEmp.getStatus() + "，不可修改");
         }
 
-        // 设置复核意见
+        // 设置复核意见 复核人 复核时间
         employeeRecord.setReviewOpinions(updateEmployeeRecordVoFromHrmVo.getReviewOpinions());
+        employeeRecord.setReviewId(StpUtil.getLoginIdAsInt());
+        employeeRecord.setReviewTime(Calendar.getInstance().getTime());
         employeeRecord.setStatus("正常");
         baseMapper.updateById(employeeRecord);
     }
@@ -180,11 +188,11 @@ public class EmployeeRecordServiceImpl extends ServiceImpl<EmployeeRecordMapper,
         wrapper.ne(EmployeeRecord::getStatus, "已删除");
         // 1.1 如果开始日期不为空
         if (!conditionalQueriesEmployeeVo.getStartTime().isBlank()) {
-            wrapper.ge(EmployeeRecord::getRegistrationTime, conditionalQueriesEmployeeVo.getStartTime());
+            wrapper.ge(EmployeeRecord::getRegisterTime, conditionalQueriesEmployeeVo.getStartTime());
         }
         // 1.2 如果结束日期不为空
         if (!conditionalQueriesEmployeeVo.getEndTime().isBlank()) {
-            wrapper.le(EmployeeRecord::getRegistrationTime, conditionalQueriesEmployeeVo.getEndTime());
+            wrapper.le(EmployeeRecord::getRegisterTime, conditionalQueriesEmployeeVo.getEndTime());
         }
         // 1.3 如果职位id不为空
         if (!conditionalQueriesEmployeeVo.getPositionId().isBlank()) {
@@ -218,5 +226,9 @@ public class EmployeeRecordServiceImpl extends ServiceImpl<EmployeeRecordMapper,
         }
 
         return list;
+    }
+
+    public List<Integer> queryIdByKeyWord(String keyWord) {
+        return baseMapper.queryIdByKeyWord(keyWord);
     }
 }

@@ -35,6 +35,19 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     public List<User> getAll() {
         return userMapper.selectList(null);
     }
+
+    public void saveUser(User user) {
+        // 1. 查询username是否存在
+        LambdaQueryWrapper<User> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(User::getUsername, user.getUsername());
+        User dbUser = userMapper.selectOne(wrapper);
+        if (dbUser != null) {
+            throw new CustomException("用户名已存在");
+        }
+
+        // 2. 新增
+        userMapper.insert(user);
+    }
 }
 
 

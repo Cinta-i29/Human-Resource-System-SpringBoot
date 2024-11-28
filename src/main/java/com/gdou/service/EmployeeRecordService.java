@@ -35,4 +35,6 @@ public interface EmployeeRecordService extends IService<EmployeeRecord> {
     String uploadAvatar(String recordNumber, MultipartFile file);
 
     List<EmployeeRecord> conditionSearch(ConditionalQueriesEmployeeVo conditionalQueriesEmployeeVo);
+
+    List<Integer> queryIdByKeyWord(String keyWord);
 }

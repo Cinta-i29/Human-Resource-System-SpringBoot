@@ -30,9 +30,29 @@ public class SalaryStandardListVo {
     private Integer creatorId;
 
     /**
+     * 制定时间
+     */
+    private Date creatorAt;
+
+    /**
      * 登记人id
      */
     private Integer registrarId;
+
+    /**
+     * 登记时间
+     */
+    private Date registrarAt;
+
+    /**
+     * 复核人id
+     */
+    private Integer reviewId;
+
+    /**
+     * 复核时间
+     */
+    private Date reviewAt;
 
     /**
      * 状态
@@ -40,19 +60,9 @@ public class SalaryStandardListVo {
     private String status;
 
     /**
-     * 登记时间
-     */
-    private Date createdAt;
-
-    /**
-     * 复核时间
-     */
-    private Date checkedAt;
-
-    /**
      * 复核意见
      */
-    private String comment;
+    private String reviewComment;
 
     /**
      * 薪酬项目集合

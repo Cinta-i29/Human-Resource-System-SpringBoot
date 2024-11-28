@@ -189,6 +189,12 @@ public class UpdateEmployeeRecordVoFromHrmVo {
     private Integer salaryStandardId;
 
     /**
+     * 职位ID
+     */
+    @Schema(description = "职位ID")
+    private Integer positionId;
+
+    /**
      * 审核意见
      */
     @Schema(description = "审核意见")

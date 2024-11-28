@@ -14,6 +14,12 @@
         WHERE e.record_number = #{recordNumber}
     </select>
 
+    <select id="queryIdByKeyWord" resultType="java.lang.Integer">
+        SELECT user_id
+        FROM user
+        WHERE username LIKE CONCAT('%', #{keyWord}, '%')
+           OR name LIKE CONCAT('%', #{keyWord}, '%');
+    </select>
 
 
 </mapper>
