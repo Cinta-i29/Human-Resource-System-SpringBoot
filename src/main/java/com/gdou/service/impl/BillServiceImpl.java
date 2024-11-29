@@ -3,12 +3,12 @@ package com.gdou.service.impl;
 import cn.dev33.satoken.stp.StpUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.gdou.mapper.BillMapper;
+import com.gdou.mapper.SalaryStandardMapper;
 import com.gdou.mapping.BillMapping;
 import com.gdou.pojo.entity.Bill;
 import com.gdou.pojo.vo.BillEmpListVo;
-import com.gdou.pojo.vo.bill.ConditionalSearchBillEmpVo;
-import com.gdou.pojo.vo.bill.RegisterBillVo;
-import com.gdou.pojo.vo.bill.ReviewBillVo;
+import com.gdou.pojo.vo.bill.*;
+import com.gdou.pojo.vo.salary.SalaryItemMoneyVo;
 import com.gdou.service.BillService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -24,6 +24,7 @@ import java.util.List;
 public class BillServiceImpl extends ServiceImpl<BillMapper, Bill>
         implements BillService {
     private final BillMapping billMapping;
+    private final SalaryStandardMapper salaryStandardMapper;
 
     public List<BillEmpListVo> getEmpList(ConditionalSearchBillEmpVo csbev) {
         // 1. 使用SQL查询档案列表
@@ -72,6 +73,23 @@ public class BillServiceImpl extends ServiceImpl<BillMapper, Bill>
 
         // 3. 更新数据
         baseMapper.updateById(dbBill);
+    }
+
+    public List<BillListVo> conditionalQueryBillList(ConditionalSearchBillVo conditionalSearchBillVo) {
+        List<BillListVo> billListVos = baseMapper.conditionalQueryBillList(conditionalSearchBillVo);
+        for (BillListVo billListVo : billListVos) {
+            billListVo.setSalaryItemMoneyVoList(
+                    salaryStandardMapper.getSalaryItemMoneyList(billListVo.getSalaryStandardId()));
+            double SalaryStandardTotalMoney = 0;
+            for (SalaryItemMoneyVo s : billListVo.getSalaryItemMoneyVoList()) {
+                SalaryStandardTotalMoney += s.getIsDeduction() ? -s.getMoney() : s.getMoney();
+            }
+            billListVo.setSalaryStandardTotalMoney(SalaryStandardTotalMoney);
+            billListVo.setBillTotalMoney(
+                    SalaryStandardTotalMoney +
+                            billListVo.getAwardMoney() - billListVo.getDeductionMoney());
+        }
+        return billListVos;
     }
 }
 

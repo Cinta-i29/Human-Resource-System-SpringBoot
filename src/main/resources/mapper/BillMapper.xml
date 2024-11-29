@@ -5,24 +5,52 @@
 <mapper namespace="com.gdou.mapper.BillMapper">
 
     <select id="getEmpList" resultType="com.gdou.pojo.vo.BillEmpListVo">
-        SELECT er.record_number      AS record_number,
-               er.name               AS name,
-               p.name                AS position_name,
-               er.title              AS title,
-               er.salary_standard_id AS salary_standard_id,
-               ss.name               AS salary_standard_name,
-               temp.sum              AS salary_standard_amount
+        SELECT er.record_number                  AS record_number,
+               er.name                           AS name,
+               p.name                            AS position_name,
+               er.title                          AS title,
+               er.salary_standard_id             AS salary_standard_id,
+               ss.name                           AS salary_standard_name,
+               temp.salary_standard_total_amount AS salary_standard_amount
         FROM employee_record er
                  JOIN position p
                       ON er.position_id = p.id
                  JOIN salary_standard ss
                       ON er.salary_standard_id = ss.id
-                 JOIN (SELECT ssi.salary_standard_id, sum(ssi.money) sum
+                 JOIN (SELECT ssi.salary_standard_id,
+                              SUM(IF(si.is_deduction, ssi.money * -1, ssi.money)) AS salary_standard_total_amount
                        FROM salary_standard_item ssi
+                                JOIN salary_item si ON ssi.salary_item_id = si.id
                        GROUP BY ssi.salary_standard_id) AS temp
                       ON er.salary_standard_id = temp.salary_standard_id
         WHERE er.status = '正常'
           AND ss.status = '正常'
           AND er.position_id IS NOT NULL;
+    </select>
+
+    <select id="conditionalQueryBillList" resultType="com.gdou.pojo.vo.bill.BillListVo">
+        SELECT b.*, ss.name AS salaryStandardName
+        FROM bill b
+        JOIN salary_standard ss ON b.salary_standard_id = ss.id
+        <where>
+            <if test="id != null">
+                AND b.id = #{id}
+            </if>
+            <if test="employeeId != null and employeeId != '' ">
+                AND b.employee_id = #{employeeId}
+            </if>
+            <if test="salaryStandardId != null">
+                AND b.salary_standard_id = #{salaryStandardId}
+            </if>
+            <if test="status != null and status != '' ">
+                AND b.status = #{status}
+            </if>
+            <if test="registerStartTime != null and registerStartTime != '' ">
+                AND b.register_time &gt;= #{registerStartTime}
+            </if>
+            <if test="registerEndTime != null and registerEndTime != '' ">
+                AND b.register_time &lt;= #{registerEndTime}
+            </if>
+        </where>
     </select>
 </mapper>

@@ -65,7 +65,7 @@ public class SalaryStandardListVo {
     private String reviewComment;
 
     /**
-     * 薪酬项目集合
+     * 薪合酬项目集
      */
-    private List<SalaryItemMoneyVo> SalaryItemMoneyVoList;
+    private List<SalaryItemMoneyVo> salaryItemMoneyVoList;
 }

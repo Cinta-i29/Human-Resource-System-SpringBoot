@@ -6,6 +6,7 @@ import com.gdou.common.ResultCode;
 import com.gdou.common.UserRole;
 import com.gdou.pojo.vo.Result;
 import com.gdou.pojo.vo.bill.ConditionalSearchBillEmpVo;
+import com.gdou.pojo.vo.bill.ConditionalSearchBillVo;
 import com.gdou.pojo.vo.bill.RegisterBillVo;
 import com.gdou.pojo.vo.bill.ReviewBillVo;
 import com.gdou.service.BillService;
@@ -30,7 +31,7 @@ public class BillController {
     /**
      * 返回可以申请薪酬账单的档案列表
      */
-    @GetMapping("/employee/list")
+    @PostMapping("/employee/list")
     @Operation(summary = "返回可以登记薪酬账单的档案列表", description = "返回可以申请薪酬账单的档案列表：1. 档案状态为'正常' 2. 薪酬标准ID不为空 3. 薪酬标准的状态为'正常'")
     @Parameter(name = "Authorization", description = "Token", in = ParameterIn.HEADER, schema = @Schema(type = "string"), required = true)
     @SaCheckRole(value = {UserRole.ADMIN_STR, UserRole.SALARY_SPECIALIST_STR, UserRole.SALARY_MANAGER_STR}, mode = SaMode.OR)
@@ -42,42 +43,25 @@ public class BillController {
                 .build();
     }
 
-//    /**
-//     * 获取薪酬账单详情
-//     */
-//    @GetMapping("/detail/{billNumber}")
-//    @Operation(summary = "获取薪酬账单详情", description = "获取薪酬账单详情")
-//    @Parameter(name = "Authorization", description = "Token", in = ParameterIn.HEADER, schema = @Schema(type = "string"), required = true)
-//    @SaCheckRole(value = {UserRole.ADMIN_STR, UserRole.SALARY_SPECIALIST_STR, UserRole.SALARY_MANAGER_STR}, mode = SaMode.OR)
-//    public Result getBillDetail(@PathVariable Integer billNumber) {
-//        return Result.builder()
-//                .code(ResultCode.SUCCESS.code)
-//                .msg("查询成功")
-//                .data(billService.getBillDetail(billNumber))
-//                .build();
-//    }
-
-
     /**
      * 查询账单列表(可选择查询条件)(薪酬单号、关键字和发放时间)
-     * TODO: Implement this method
      */
-//    @GetMapping("/list")
-//    @Operation(summary = "查询账单列表", description = "查询账单列表(可选择查询条件)(薪酬单号、关键字和发放时间)")
-//    @Parameter(name = "Authorization", description = "Token", in = ParameterIn.HEADER, schema = @Schema(type = "string"), required = true)
-//    @SaCheckRole(value = {UserRole.ADMIN_STR, UserRole.SALARY_SPECIALIST_STR, UserRole.SALARY_MANAGER_STR}, mode = SaMode.OR)
-//    public Result getBillList(@RequestBody ConditionalSearchBillVo conditionalSearchBillVo) {
-//        return Result.builder()
-//                .code(ResultCode.SUCCESS.code)
-//                .msg("查询成功")
-//                .data(billService.getBillList(conditionalSearchBillVo))
-//                .build();
-//    }
+    @PostMapping("/list")
+    @Operation(summary = "条件查询账单列表", description = "查询账单列表(可选择查询条件)(薪酬单号、状态和登记时间)")
+    @Parameter(name = "Authorization", description = "Token", in = ParameterIn.HEADER, schema = @Schema(type = "string"), required = true)
+    @SaCheckRole(value = {UserRole.ADMIN_STR, UserRole.SALARY_SPECIALIST_STR, UserRole.SALARY_MANAGER_STR}, mode = SaMode.OR)
+    public Result getBillList(@RequestBody ConditionalSearchBillVo conditionalSearchBillVo) {
+        return Result.builder()
+                .code(ResultCode.SUCCESS.code)
+                .msg("查询成功")
+                .data(billService.conditionalQueryBillList(conditionalSearchBillVo))
+                .build();
+    }
 
     /**
      * 薪酬专员登记某个档案的薪酬账单
      */
-    @PutMapping("/register")
+    @PostMapping("/register")
     @Operation(summary = "薪酬专员登记某个档案的薪酬账单", description = "薪酬专员登记某个档案的薪酬账单")
     @Parameter(name = "Authorization", description = "Token", in = ParameterIn.HEADER, schema = @Schema(type = "string"), required = true)
     @SaCheckRole(UserRole.SALARY_SPECIALIST_STR)
@@ -92,7 +76,7 @@ public class BillController {
     /**
      * 薪酬专员复核某个档案的薪酬账单
      */
-    @PutMapping("/review")
+    @PostMapping("/review")
     @Operation(summary = "薪酬专员复核某个档案的薪酬账单", description = "薪酬专员复核某个档案的薪酬账单")
     @Parameter(name = "Authorization", description = "Token", in = ParameterIn.HEADER, schema = @Schema(type = "string"), required = true)
     @SaCheckRole(UserRole.SALARY_MANAGER_STR)
