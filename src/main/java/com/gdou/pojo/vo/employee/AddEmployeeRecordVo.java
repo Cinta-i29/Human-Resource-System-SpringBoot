@@ -110,7 +110,4 @@ public class AddEmployeeRecordVo {
 
     @Schema(description = "薪酬标准ID，外键，关联薪酬标准表")
     private Integer salaryStandardId;
-
-    @Schema(description = "照片URL路径")
-    private String photoUrl;
 }
