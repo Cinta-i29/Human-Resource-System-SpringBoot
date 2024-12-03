@@ -36,7 +36,7 @@ public class EmployeeRecordController {
      * 新增员工档案
      */
     @PostMapping("/add")
-    @Operation(summary = "新增员工档案", description = "新增员工档案，返回新增的员工档案信息。然后再根据员工档案号上传新的员工信息")
+    @Operation(summary = "人事专员登记员工档案", description = "登记员工档案，返回新增的员工档案信息。然后再根据员工档案号上传新的员工信息")
     @Parameter(name = "Authorization", description = "Token", in = ParameterIn.HEADER, schema = @Schema(type = "string"), required = true)
     @SaCheckRole(value = {UserRole.ADMIN_STR, UserRole.HR_SPECIALIST_STR, UserRole.HR_MANAGER_STR}, mode = SaMode.OR)
     public Result add(@RequestBody AddEmployeeRecordVo addEmployeeRecordVo) {
@@ -51,7 +51,7 @@ public class EmployeeRecordController {
      * 人事专员修改员工档案
      */
     @PostMapping("/update/s")
-    @Operation(summary = "人事专员登记员工档案", description = "")
+    @Operation(summary = "人事专员修改员工档案", description = "需要人事经理审核")
     @Parameter(name = "Authorization", description = "Token", in = ParameterIn.HEADER, schema = @Schema(type = "string"), required = true)
     @SaCheckRole(UserRole.HR_SPECIALIST_STR)
     public Result updateFromHrs(@RequestBody UpdateEmployeeRecordVo updateEmployeeRecordVo) {
