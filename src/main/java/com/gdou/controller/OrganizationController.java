@@ -48,7 +48,6 @@ public class OrganizationController {
     @PostMapping("/list")
     @Operation(summary = "获取所有机构", description = "获取所有机构，返回的是List<VO1>, VO1其中一个属性是List<VO2>, VO2其中一个属性是List<VO3>")
     @Parameter(name = "Authorization", description = "Token", in = ParameterIn.HEADER, schema = @Schema(type = "string"), required = true)
-    @SaCheckRole(UserRole.ADMIN_STR)
     public Result list() {
         return Result.builder()
                 .code(ResultCode.SUCCESS.code)
