@@ -2,6 +2,7 @@ package com.gdou.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.gdou.pojo.entity.Organization;
+import com.gdou.pojo.vo.org.OrgByIdVo;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
@@ -14,6 +15,8 @@ public interface OrganizationMapper extends BaseMapper<Organization> {
     List<Organization> selectAllOrdered();
 
     Integer getOrgByCode(Integer code1, Integer code2, Integer code3);
+
+    OrgByIdVo getOrgById(Integer orgId);
 }
 
 

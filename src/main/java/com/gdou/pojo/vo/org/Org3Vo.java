@@ -12,6 +12,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Org3Vo {
     /**
+     * 机构id
+     */
+    private Integer id;
+    /**
      * 机构级别
      */
     private Integer level;

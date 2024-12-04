@@ -5,10 +5,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.gdou.exception.CustomException;
 import com.gdou.mapper.OrganizationMapper;
 import com.gdou.pojo.entity.Organization;
-import com.gdou.pojo.vo.org.AddOrgVo;
-import com.gdou.pojo.vo.org.Org1Vo;
-import com.gdou.pojo.vo.org.Org2Vo;
-import com.gdou.pojo.vo.org.Org3Vo;
+import com.gdou.pojo.vo.org.*;
 import com.gdou.service.OrganizationService;
 import org.springframework.stereotype.Service;
 
@@ -19,8 +16,6 @@ import java.util.stream.Collectors;
 
 /**
  * @author zzhave
- * @description 针对表【organization(机构表)】的数据库操作Service实现
- * @createDate 2024-11-26 15:58:47
  */
 @Service
 public class OrganizationServiceImpl extends ServiceImpl<OrganizationMapper, Organization>
@@ -179,6 +174,7 @@ public class OrganizationServiceImpl extends ServiceImpl<OrganizationMapper, Org
                                 for (Organization org3 : org3s) {
                                     if (org3.getParentId().equals(org2.getId())) {
                                         Org3Vo org3Vo = new Org3Vo();
+                                        org3Vo.setId(org3.getId()); // 机构id
                                         org3Vo.setLevel(org3.getLevel());
                                         org3Vo.setName(org3.getName());
                                         org3Vo.setCode(org3.getCode());
@@ -199,13 +195,19 @@ public class OrganizationServiceImpl extends ServiceImpl<OrganizationMapper, Org
 
     /**
      * 根据机构代码查询机构id
-     *
-     * @return
      */
     public Integer getOrgByCode(Integer code1, Integer code2, Integer code3) {
         // code1为一级机构的code,code2为二级机构的code,code3为三级机构的code,
         // 根据code1,code2,code3得到对应的机构id
         return baseMapper.getOrgByCode(code1, code2, code3);
+    }
+
+    public OrgByIdVo getOrgById(Integer orgId) {
+        OrgByIdVo org = baseMapper.getOrgById(orgId);
+        if (org == null) {
+            throw new CustomException("机构不存在");
+        }
+        return org;
     }
 
 

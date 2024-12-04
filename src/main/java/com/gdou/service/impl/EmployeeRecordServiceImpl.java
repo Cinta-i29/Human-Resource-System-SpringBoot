@@ -24,8 +24,6 @@ import java.util.List;
 
 /**
  * @author zzhave
- * @description 针对表【employee_record(员工档案表)】的数据库操作Service实现
- * @createDate 2024-11-25 23:23:28
  */
 @Service
 @RequiredArgsConstructor
@@ -34,7 +32,6 @@ public class EmployeeRecordServiceImpl extends ServiceImpl<EmployeeRecordMapper,
     private final OrganizationService organizationService;
     private final MinioHelper minio;
 
-    @Override
     public EmployeeRecord addEmployeeRecord(AddEmployeeRecordVo addEmployeeRecordVo) {
         // 0. 将addEmployeeRecordVo转换为EmployeeRecord对象
         EmployeeRecord employeeRecord = employeeRecordMapping.addEmployeeRecordVoToEmployeeRecord(addEmployeeRecordVo);

@@ -16,4 +16,17 @@
           AND o2.code = #{code2}
           AND o3.code = #{code3}
     </select>
+    <select id="getOrgById" resultType="com.gdou.pojo.vo.org.OrgByIdVo">
+        SELECT o3.code AS firstOrgCode,
+               o3.name AS firstOrgName,
+               o2.code AS secondOrgCode,
+               o2.name AS secondOrgName,
+               o1.code AS thirdOrgCode,
+               o1.name AS thirdOrgName,
+               o1.id   AS orgId
+        FROM organization o1
+                 JOIN organization o2 ON o1.parent_id = o2.id
+                 JOIN organization o3 ON o2.parent_id = o3.id
+        WHERE o1.id = #{orgId}
+    </select>
 </mapper>

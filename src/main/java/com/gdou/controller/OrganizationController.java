@@ -12,10 +12,7 @@ import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author howe
@@ -55,4 +52,19 @@ public class OrganizationController {
                 .data(organizationService.getOrgList())
                 .build();
     }
+
+    /**
+     * 根据三级机构ID获取到机构信息
+     */
+    @PostMapping("/{orgId}")
+    @Operation(summary = "根据三级机构ID获取到机构信息", description = "根据三级机构ID获取到机构信息")
+    @Parameter(name = "Authorization", description = "Token", in = ParameterIn.HEADER, schema = @Schema(type = "string"), required = true)
+    public Result getOrgById(@PathVariable Integer orgId) {
+        return Result.builder()
+                .code(ResultCode.SUCCESS.code)
+                .msg("获取成功")
+                .data(organizationService.getOrgById(orgId))
+                .build();
+    }
+
 }
