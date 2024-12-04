@@ -44,9 +44,8 @@ public class PositionController {
      * 获取所有职位
      */
     @PostMapping("/list")
-    @Operation(summary = "获取所有职位", description = "")
+    @Operation(summary = "获取所有职位", description = "任何人都可以获取所有职位")
     @Parameter(name = "Authorization", description = "Token", in = ParameterIn.HEADER, schema = @Schema(type = "string"), required = true)
-    @SaCheckRole(UserRole.ADMIN_STR)
     public Result list() {
         return Result.builder()
                 .code(ResultCode.SUCCESS.code)
