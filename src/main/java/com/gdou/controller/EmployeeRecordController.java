@@ -80,7 +80,7 @@ public class EmployeeRecordController {
     /**
      * 根据档案号查询员工档案
      */
-    @PostMapping("/get//{recordNumber}")
+    @PostMapping("/get/{recordNumber}")
     @Operation(summary = "根据档案号查询员工档案", description = "根据档案号查询员工档案，查不到已删除的")
     @Parameter(name = "Authorization", description = "Token", in = ParameterIn.HEADER, schema = @Schema(type = "string"), required = true)
     @SaCheckRole(value = {UserRole.ADMIN_STR, UserRole.HR_SPECIALIST_STR, UserRole.HR_MANAGER_STR}, mode = SaMode.OR)

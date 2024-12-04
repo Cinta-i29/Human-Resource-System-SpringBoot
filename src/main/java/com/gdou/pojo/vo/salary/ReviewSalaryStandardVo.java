@@ -30,5 +30,5 @@ public class ReviewSalaryStandardVo {
      * 薪酬标准项目集合
      */
     @Schema(description = "薪酬标准项目集合")
-    private List<RegisterSalaryItemMoneyVo> RegisterSalaryItemMoneyVoList;
+    private List<RegisterSalaryItemMoneyVo> registerSalaryItemMoneyVoList;
 }
