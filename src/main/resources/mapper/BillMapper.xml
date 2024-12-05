@@ -29,9 +29,10 @@
     </select>
 
     <select id="conditionalQueryBillList" resultType="com.gdou.pojo.vo.bill.BillListVo">
-        SELECT b.*, ss.name AS salaryStandardName
+        SELECT b.*, ss.name AS salaryStandardName,er.name AS employeeName
         FROM bill b
         JOIN salary_standard ss ON b.salary_standard_id = ss.id
+        JOIN employee_record er on b.employee_id = er.record_number
         <where>
             <if test="id != null">
                 AND b.id = #{id}

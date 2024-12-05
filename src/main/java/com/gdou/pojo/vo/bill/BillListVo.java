@@ -22,6 +22,11 @@ public class BillListVo {
     private String employeeId;
 
     /**
+     * 员工姓名
+     */
+    private String employeeName;
+
+    /**
      * 薪酬标准编号
      */
     private Integer salaryStandardId;
