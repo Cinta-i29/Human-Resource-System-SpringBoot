@@ -85,6 +85,22 @@ public class UserController {
     }
 
     /**
+     * 获取某个用户
+     */
+    @GetMapping("/{userId}")
+    @Operation(summary = "获取某个用户", description = "获取某个用户")
+    @Parameter(name = "Authorization", description = "Token", in = ParameterIn.HEADER, schema = @Schema(type = "string"), required = true)
+    public Result getUserInfoById(@PathVariable Integer userId) {
+        return Result.builder()
+                .code(ResultCode.SUCCESS.code)
+                .msg("获取成功")
+                .data(userService.getById(userId))
+                .build();
+    }
+
+
+
+    /**
      * 修改用户信息
      */
     @PutMapping("/update")

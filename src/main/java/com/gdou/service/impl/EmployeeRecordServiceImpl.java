@@ -184,21 +184,21 @@ public class EmployeeRecordServiceImpl extends ServiceImpl<EmployeeRecordMapper,
         LambdaQueryWrapper<EmployeeRecord> wrapper = new LambdaQueryWrapper<>();
         wrapper.ne(EmployeeRecord::getStatus, "已删除");
         // 1.1 如果开始日期不为空
-        if (!conditionalQueriesEmployeeVo.getStartTime().isBlank()) {
+        if (conditionalQueriesEmployeeVo.getStartTime() != null && !conditionalQueriesEmployeeVo.getStartTime().isBlank()) {
             wrapper.ge(EmployeeRecord::getRegisterTime, conditionalQueriesEmployeeVo.getStartTime());
         }
         // 1.2 如果结束日期不为空
-        if (!conditionalQueriesEmployeeVo.getEndTime().isBlank()) {
+        if (conditionalQueriesEmployeeVo.getEndTime() != null && !conditionalQueriesEmployeeVo.getEndTime().isBlank()) {
             wrapper.le(EmployeeRecord::getRegisterTime, conditionalQueriesEmployeeVo.getEndTime());
         }
         // 1.3 如果职位id不为空
-        if (!conditionalQueriesEmployeeVo.getPositionId().isBlank()) {
+        if (conditionalQueriesEmployeeVo.getPositionId() != null && !conditionalQueriesEmployeeVo.getPositionId().isBlank()) {
             wrapper.eq(EmployeeRecord::getPositionId, conditionalQueriesEmployeeVo.getPositionId());
         }
         List<EmployeeRecord> list = baseMapper.selectList(wrapper);
 
         // 2. 根据机构code的条件查询
-        if (!conditionalQueriesEmployeeVo.getFirstCode().isBlank()) {
+        if (conditionalQueriesEmployeeVo.getFirstCode() != null && !conditionalQueriesEmployeeVo.getFirstCode().isBlank()) {
             int value = Integer.parseInt(conditionalQueriesEmployeeVo.getFirstCode());
             if (value < 1 || value > 99) {
                 throw new CustomException("一级机构代码错误");
@@ -206,7 +206,7 @@ public class EmployeeRecordServiceImpl extends ServiceImpl<EmployeeRecordMapper,
             list.removeIf(emp -> !emp.getRecordNumber().substring(4, 6).equals(String.format("%02d", value)));
         }
 
-        if (!conditionalQueriesEmployeeVo.getSecondCode().isBlank()) {
+        if (conditionalQueriesEmployeeVo.getSecondCode() != null && !conditionalQueriesEmployeeVo.getSecondCode().isBlank()) {
             int value = Integer.parseInt(conditionalQueriesEmployeeVo.getSecondCode());
             if (value < 1 || value > 99) {
                 throw new CustomException("二级机构代码错误");
@@ -214,7 +214,7 @@ public class EmployeeRecordServiceImpl extends ServiceImpl<EmployeeRecordMapper,
             list.removeIf(emp -> !emp.getRecordNumber().substring(6, 8).equals(String.format("%02d", value)));
         }
 
-        if (!conditionalQueriesEmployeeVo.getThirdCode().isBlank()) {
+        if (conditionalQueriesEmployeeVo.getThirdCode() != null && !conditionalQueriesEmployeeVo.getThirdCode().isBlank()) {
             int value = Integer.parseInt(conditionalQueriesEmployeeVo.getThirdCode());
             if (value < 1 || value > 99) {
                 throw new CustomException("三级机构代码错误");
