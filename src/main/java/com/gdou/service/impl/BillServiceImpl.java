@@ -33,21 +33,25 @@ public class BillServiceImpl extends ServiceImpl<BillMapper, Bill>
         if (csbev.getFirstCode().isBlank()) {
             return list;
         }
+        StringBuilder sb = new StringBuilder();
         // 3. 二级机构code条件为空，筛选掉一级机构code不符合的数据
+        sb.append(String.format("%02d", Integer.parseInt(csbev.getFirstCode())));
         if (csbev.getSecondCode().isBlank()) {
             list.removeIf(billEmpListVo ->
-                    !billEmpListVo.getRecordNumber().substring(4, 6).equals(csbev.getFirstCode()));
+                    !billEmpListVo.getRecordNumber().substring(4, 6).contentEquals(sb));
             return list;
         }
         // 4. 三级机构code条件为空，筛选掉一级机构code和二级机构code不符合的数据
+        sb.append(String.format("%02d", Integer.parseInt(csbev.getSecondCode())));
         if (csbev.getThirdCode().isBlank()) {
             list.removeIf(billEmpListVo ->
-                    !billEmpListVo.getRecordNumber().substring(4, 8).equals(csbev.getFirstCode() + csbev.getSecondCode()));
+                    !billEmpListVo.getRecordNumber().substring(4, 8).contentEquals(sb));
             return list;
         }
         // 5， 三级机构code条件不为空，筛选掉一级机构code和二级机构code和三级机构code不符合的数据
+        sb.append(String.format("%02d", Integer.parseInt(csbev.getThirdCode())));
         list.removeIf(billEmpListVo ->
-                !billEmpListVo.getRecordNumber().substring(4, 10).equals(csbev.getFirstCode() + csbev.getSecondCode() + csbev.getThirdCode()));
+                !billEmpListVo.getRecordNumber().substring(4, 10).contentEquals(sb));
         return list;
     }
 
