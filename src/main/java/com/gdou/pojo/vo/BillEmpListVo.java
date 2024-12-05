@@ -17,13 +17,13 @@ public class BillEmpListVo {
     @Schema(description = "姓名")
     private String name;
     @Schema(description = "职位名称")
-    private String position_name;
+    private String positionName;
     @Schema(description = "职称")
     private String title;
     @Schema(description = "薪酬标准id")
-    private Integer salary_standard_id;
+    private Integer salaryStandardId;
     @Schema(description = "薪酬标准名称")
-    private String salary_standard_name;
+    private String salaryStandardName;
     @Schema(description = "薪酬标准总额")
-    private String salary_standard_amount;
+    private String salaryStandardAmount;
 }

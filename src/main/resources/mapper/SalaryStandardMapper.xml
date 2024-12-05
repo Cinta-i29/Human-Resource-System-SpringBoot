@@ -3,6 +3,26 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gdou.mapper.SalaryStandardMapper">
+    <resultMap id="SalaryStandardListVoMap" type="com.gdou.pojo.vo.salary.SalaryStandardListVo">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="creatorId" column="creatorId"/>
+        <result property="creatorAt" column="creatorAt"/>
+        <result property="registrarId" column="registrarId"/>
+        <result property="registrarAt" column="registrarAt"/>
+        <result property="reviewId" column="reviewId"/>
+        <result property="reviewAt" column="reviewAt"/>
+        <result property="status" column="status"/>
+        <result property="reviewComment" column="reviewComment"/>
+
+        <!-- Collection mapping for salaryItemMoneyVoList -->
+        <collection property="salaryItemMoneyVoList" ofType="com.gdou.pojo.vo.salary.SalaryItemMoneyVo">
+            <result property="id" column="salaryItemId"/>
+            <result property="name" column="salaryItemName"/>
+            <result property="isDeduction" column="isDeduction"/>
+            <result property="money" column="salaryItemMoney"/>
+        </collection>
+    </resultMap>
 
 
     <select id="getSalaryItemMoneyList" resultType="com.gdou.pojo.vo.salary.SalaryItemMoneyVo">
@@ -12,13 +32,28 @@
                       ON ssi.salary_item_id = si.id
         WHERE ssi.salary_standard_id = #{id};
     </select>
-    <select id="getOneByEmpId" resultType="com.gdou.pojo.vo.salary.SalaryStandardListVo">
-        SELECT si.id, si.name, si.is_deduction, ssi.money
+
+    <select id="getOneByEmpId" resultMap="SalaryStandardListVoMap">
+        SELECT
+            ss.id AS id,
+            ss.name AS name,
+            ss.creator_id AS creatorId,
+            ss.creator_at AS creatorAt,
+            ss.registrar_id AS registrarId,
+            ss.registrar_at AS registrarAt,
+            ss.review_id AS reviewId,
+            ss.review_at AS reviewAt,
+            ss.status AS status,
+            ss.review_comment AS reviewComment,
+            si.id AS salaryItemId,
+            si.name AS salaryItemName,
+            si.is_deduction AS isDeduction,
+            ssi.money AS salaryItemMoney
         FROM employee_record er
-                 JOIN salary_standard_item AS ssi
-                      ON er.salary_standard_id = ssi.salary_standard_id
-                 JOIN salary_item AS si
-                      ON ssi.salary_item_id = si.id
+                 JOIN salary_standard_item ssi ON er.salary_standard_id = ssi.salary_standard_id
+                 JOIN salary_item si ON ssi.salary_item_id = si.id
+                 JOIN salary_standard ss ON ss.id = ssi.salary_standard_id
         WHERE er.record_number = #{empId};
     </select>
+
 </mapper>
