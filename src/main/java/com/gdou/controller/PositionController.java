@@ -60,7 +60,7 @@ public class PositionController {
     @DeleteMapping("/{positionId}")
     @Operation(summary = "删除职位", description = "当没有员工使用该职位的时候，才能够被删除")
     @Parameter(name = "Authorization", description = "Token", in = ParameterIn.HEADER, schema = @Schema(type = "string"), required = true)
-    @SaCheckRole(UserRole.ADMIN_STR)
+    
     public Result delete(@PathVariable Long positionId) {
         positionService.deletePosition(positionId);
         return Result.builder()
