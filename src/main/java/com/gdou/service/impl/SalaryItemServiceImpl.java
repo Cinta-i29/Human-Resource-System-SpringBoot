@@ -35,10 +35,10 @@ public class SalaryItemServiceImpl extends ServiceImpl<SalaryItemMapper, SalaryI
 
     public void delete(Integer id) {
         // 1. 查询是否有关联
-        Integer count = baseMapper.selectCountBySalaryItemId(id);
         if (id == 1) {
             throw new CustomException("基本工资项目不可删除");
         }
+        Integer count = baseMapper.selectCountBySalaryItemId(id);
         if (count > 0) {
             throw new CustomException("薪酬项目已被使用，无法删除");
         }

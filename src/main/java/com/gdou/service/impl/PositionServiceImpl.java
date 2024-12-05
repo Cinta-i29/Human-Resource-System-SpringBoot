@@ -45,10 +45,14 @@ public class PositionServiceImpl extends ServiceImpl<PositionMapper, Position>
         }
 
         // 2. 查询是否有人使用该职位
-        employeeRecordService.lambdaQuery().eq(EmployeeRecord::getPositionId, positionId).oneOpt()
-                .ifPresent(employeeRecord -> {
-                    throw new CustomException("该职位已被员工使用,无法删除");
-                });
+        try {
+            employeeRecordService.lambdaQuery().eq(EmployeeRecord::getPositionId, positionId).oneOpt()
+                    .ifPresent(employeeRecord -> {
+                        throw new CustomException("该职位已被员工使用,无法删除");
+                    });
+        } catch (Exception e) {
+            throw new CustomException("该职位已被员工使用,无法删除");
+        }
 
         // 3. 删除职位
         this.removeById(positionId);

@@ -5,10 +5,11 @@ import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.util.StrUtil;
 import com.gdou.common.ResultCode;
 import com.gdou.common.UserRole;
+import com.gdou.exception.CustomException;
 import com.gdou.mapping.UserMapping;
 import com.gdou.pojo.entity.User;
-import com.gdou.pojo.vo.user.LoginUserVo;
 import com.gdou.pojo.vo.Result;
+import com.gdou.pojo.vo.user.LoginUserVo;
 import com.gdou.pojo.vo.user.UpdateUser;
 import com.gdou.pojo.vo.user.UserLoginSuccessVo;
 import com.gdou.service.UserService;
@@ -99,7 +100,6 @@ public class UserController {
     }
 
 
-
     /**
      * 修改用户信息
      */
@@ -123,6 +123,7 @@ public class UserController {
     @Parameter(name = "Authorization", description = "Token", in = ParameterIn.HEADER, schema = @Schema(type = "string"), required = true)
     @SaCheckRole(UserRole.ADMIN_STR) // 只有超级管理员权限才能查看
     public Result delete(@PathVariable Integer userId) {
+        if (StpUtil.getLoginId().equals(userId)) throw new CustomException("不能删除自己");
         userService.removeById(userId);
         return Result.builder()
                 .code(ResultCode.SUCCESS.code)
