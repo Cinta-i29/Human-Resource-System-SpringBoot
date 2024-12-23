@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 @MapperScan("com.gdou.mapper")
 public class HumanResourceSystemSpringBootApplication {
-
+    // test
     public static void main(String[] args) {
         SpringApplication.run(HumanResourceSystemSpringBootApplication.class, args);
     }
